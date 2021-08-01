@@ -1,3 +1,4 @@
+/* @pjs preload="background1.jpg ,background2.jpg,goal1.jpeg,goal2.jpg,hunter1.jpg,hunter2.jpg,player1.jpg,player2.jpg,treasure.jpg"; */
 boolean button = false;
 
 class Board {

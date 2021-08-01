@@ -44,23 +44,25 @@ class Screen {
     fill(0);
     textSize(32);
     textAlign(CENTER);
-    text("stage clear!", width/2, 300);
+    text("STAGE CLEAR!", width/2, 300);
     text("spaceを押して次のステージに進んでね！", width/2, height/2);
   }
 
   void End() {
     background(255);
     fill(0);
-    textSize(64);
+    textSize(32);
     textAlign(CENTER);
-    text("ゲームオーバー", width/2, height/2);
+    text("GAME OVER!", width/2, 300);
+    text("獲得した宝箱の数: " + Tcnt + "個", width/2, height/2);
   }
   void Clear() {
     background(255);
     fill(0);
-    textSize(64);
+    textSize(32);
     textAlign(CENTER);
-    text("ゲームクリア !", width/2, height/2);
+    text("GAME CLEAR!", width/2, 300);
+    text("獲得した宝箱の数: " + Tcnt + "個", width/2, height/2);
   }
 }
 
@@ -98,8 +100,8 @@ class Hunter {
   int r;
   boolean[] inView = {false, false, false, false};
   Hunter (int size0, int i, int len) {
-    int randX = int(random(size0/len*i, (size0-1)/len*(i+1)));
-    int randY = int(random(0, size0/2-1));
+    int randX = int(random(size0/len*i, size0/len*(i+1)));
+    int randY = int(random(0, size0/2));
     //println(randX, randY);
     r = width/size0;
     x = randX*r+(width/size0-width/(size0*2));
@@ -153,12 +155,12 @@ class Goal {
 
 class Treasure {
   int x,y,len;
-  Treasure (int size){
-   int randX = int(random(size/2,size));
-   int randY = int(random(0,size/2));
+  Treasure (int randomX, int randomY, int size){
+   int randX = randomX;
+   int randY = randomY;
    len = width/size;
-   x = randX*len+width/size;
-   y = randY*len+height/size;
+   x = randX*len;
+   y = randY*len;
   }
   
   void display(){
@@ -215,7 +217,7 @@ void Title() {
   if (judge == 1) {
     b = new Board(6);
     p = new Player(6);
-    t = new Treasure(6);
+    t = new Treasure(int(random(1, 6)), int(random(1, 6/2)), 6);
     g = new Goal(6);
     h = new Hunter[2];
     for (int i = 0; i < h.length; i++) {
@@ -227,7 +229,7 @@ void Title() {
   } else if (judge == 2) {
     b = new Board(8);
     p = new Player(8);
-    t = new Treasure(8);
+    t = new Treasure(int(random(1, 8)), int(random(1, 8/2)), 8);
     g = new Goal(8);
     h = new Hunter[3];
     for (int i = 0; i < h.length; i++) {
@@ -239,7 +241,7 @@ void Title() {
   } else if (judge == 3) {
     b = new Board(10);
     p = new Player(10);
-    t = new Treasure(10);
+    t = new Treasure(int(random(1, 10)), int(random(1, 10/2)), 10);
     g = new Goal(10);
     h = new Hunter[4];
     for (int i = 0; i < h.length; i++) {
@@ -296,7 +298,7 @@ void Game() {
       scene = 5;
     }
   }
-  if (t.x < p.x && t.x+t.len > p.x && t.y < p.y && t.y + t.len > p.y) {
+  if (t.x < p.x && t.x+t.len > p.x && t.y < p.y && t.y+t.len > p.y && !treasureGetJudge) {
     treasureGetJudge = true;
     Tcnt++;
   }
@@ -321,6 +323,7 @@ void Run() {
   if(sequal){
     b = new Board(n);
     p = new Player(n);
+    t = new Treasure(int(random(1, n)), int(random(1, n/2)), n);
     g = new Goal(n);
     h = new Hunter[NoH];
     for (int i = 0; i < h.length; i++) {

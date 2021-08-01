@@ -1,4 +1,4 @@
-/* @pjs preload="background1.jpg ,background2.jpg,goal1.jpeg,goal2.jpg,hunter1.jpg,hunter2.jpg,player1.jpg,player2.jpg,treasure.jpg"; */
+/* @pjs preload="game/background1.jpg ,game/background2.jpg,game/goal1.jpeg,game/goal2.jpg,game/hunter1.jpg,game/hunter2.jpg,game/player1.jpg,game/player2.jpg,game/treasure.jpg"; */
 boolean button = false;
 
 class Board {

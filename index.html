@@ -4,6 +4,21 @@
     <meta charset="utf-8">
     <title>Processing.js Demo</title>
 </head>
+<style>
+    /* border幅は0にしておく */
+    body {
+      border: 0;
+      background-color: black
+    }
+    /* canvasを「ビューポート」のサイズにする */
+    canvas {
+      width: 50vh;
+      height: 50vh;
+      display: block;
+      margin-left: auto;
+      margin-right: auto
+    }
+</style>
 <body>
     <canvas data-processing-sources="game/game.pde"></canvas>
 

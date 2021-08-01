@@ -30,14 +30,18 @@ class Screen {
   Screen() {
   }
 
-  void Start() {
+    void Start() {
     background(255);
     fill(0);
     textSize(32);
     textAlign(CENTER);
-    text("スタート画面", width/2, 300);
-    text("難易度1,2,3から選択してください", width/2, height/2);
-  }
+    text("スタート画面", width/2, 200);
+    text("難易度", width/2, 300);
+    text("1：やさしい",width/2, height/2-50);
+    text("2：ふつう",width/2, height/2);
+    text("3：むずかしい",width/2, height/2+50);
+    text("から選択してください",width/2, height/2+100);
+
 
   void Run() {
     background(255);

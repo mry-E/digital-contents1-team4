@@ -1,4 +1,4 @@
-/* @pjs preload="background1.jpg ,background2.jpg,goal1.jpeg,goal2.jpg,hunter1.jpg,hunter2.jpg,player1.jpg,player2.jpg,treasure.jpg"; */
+/* @pjs preload="images/background1.jpg ,images/background2.jpg,images/background.jpeg,images/goal1.jpeg,images/goal2.jpg,images/goal3.jpg,iamges/hunter1.jpg,images/hunter2.jpg,images/hunter.jpg,images/player1.jpg,images/player2.jpg,images/player3.jpg,images/treasure.jpg"; */
 boolean button = false;
 
 class Board {
@@ -30,18 +30,18 @@ class Screen {
   Screen() {
   }
 
-    void Start() {
+  void Start() {
     background(255);
     fill(0);
     textSize(32);
     textAlign(CENTER);
-    text("スタート画面", width/2, 200);
-    text("難易度", width/2, 300);
-    text("1：やさしい",width/2, height/2-50);
-    text("2：ふつう",width/2, height/2);
-    text("3：むずかしい",width/2, height/2+50);
-    text("から選択してください",width/2, height/2+100);
-
+    text("TOPPA", width/2, 200);
+    text("なんいど", width/2, 300);
+    text("1：やさしい", 395, height/2-50);
+    text("2：ふつう", 380, height/2);
+    text("3：むずかしい", 410, height/2+50);
+    text("からせんたくしてください", width/2, height/2+100);
+  }
 
   void Run() {
     background(255);
@@ -59,6 +59,7 @@ class Screen {
     textAlign(CENTER);
     text("GAME OVER!", width/2, 300);
     text("獲得した宝箱の数: " + Tcnt + "個", width/2, height/2);
+    text("Rキーでリトライ!", width/2, height-50);
   }
   void Clear() {
     background(255);
@@ -133,7 +134,7 @@ class Hunter {
       move(-len, 0);
     } else if (px >= x+r/2 && px <= x+len*3+r/2 && py >= y-r/2 && py <= y+r/2) {
       move(len, 0);
-    } 
+    }
   }
   void move(int stepX, int stepY) {
     x += stepX;
@@ -158,16 +159,16 @@ class Goal {
 }
 
 class Treasure {
-  int x,y,len;
-  Treasure (int randomX, int randomY, int size){
-   int randX = randomX;
-   int randY = randomY;
-   len = width/size;
-   x = randX*len;
-   y = randY*len;
+  int x, y, len;
+  Treasure (int randomX, int randomY, int size) {
+    int randX = randomX;
+    int randY = randomY;
+    len = width/size;
+    x = randX*len;
+    y = randY*len;
   }
-  
-  void display(){
+
+  void display() {
     treasure_img(x, y, len);
   }
 }
@@ -184,6 +185,7 @@ int imgscene = 1;
 int judge = 0;
 int Scnt = 0;
 int Tcnt = 0;
+boolean stage = false;
 boolean treasureGetJudge = false;
 boolean sequal = false;
 int NoH = 0;
@@ -258,21 +260,25 @@ void Title() {
 }
 
 void keyPressed() {
-  if (key == '1') {
+  if (key == '1' && !stage) {
     judge = 1;
     imgscene = 1;
-  } else if (key == '2') {
+    stage = true;
+  } else if (key == '2' && !stage) {
     judge = 2;
     imgscene = 2;
-  } else if (key == '3') {
+    stage = true;
+  } else if (key == '3' && !stage) {
     judge = 3;
     imgscene = 3;
+    stage = true;
   }
-  if(key == 'r') {
+  if (key == 'r') {
     scene = 1;
     judge = 0;
+    stage = false;
   }
-  if(key == 32) {
+  if (key == 32) {
     sequal = true;
   }
 }
@@ -281,7 +287,7 @@ void Game() {
   background_img(0, 0);
   b.display();
   p.display();
-  if(!treasureGetJudge) {
+  if (!treasureGetJudge) {
     t.display();
   }
   g.display();
@@ -324,7 +330,7 @@ void GameOver() {
 void Run() {
   s = new Screen();
   s.Run();
-  if(sequal){
+  if (sequal) {
     b = new Board(n);
     p = new Player(n);
     t = new Treasure(int(random(1, n)), int(random(1, n/2)), n);
@@ -346,15 +352,15 @@ void Clear() {
 void background_img() {
   PImage img;
   if (imgscene==1) {
-    img = loadImage("background1.jpg");
+    img = loadImage("images/background1.jpg");
     img.resize( width, height );
     background(img);
   } else if (imgscene==2) {
-    img = loadImage("background2.jpg");
+    img = loadImage("images/background2.jpg");
     img.resize( width, height );
     background(img);
   } else if (imgscene==3) {
-    img = loadImage("background3.jpg");
+    img = loadImage("images/background3.jpg");
     img.resize( width, height );
     background(img);
   }
@@ -364,15 +370,15 @@ void background_img() {
 void player_img(int x, int y, int size) {
   PImage img;
   if (imgscene==1) {
-    img = loadImage("player1.jpg");
+    img = loadImage("images/player1.jpg");
     img.resize(size, size);
     image(img, x-size/2, y-size/2, size, size);
   } else if (imgscene==2) {
-    img = loadImage("player2.jpg");
+    img = loadImage("images/player2.jpg");
     img.resize(size, size);
     image(img, x-size/2, y-size/2, size, size);
   } else if (imgscene==3) {
-    img = loadImage("player3.jpg");
+    img = loadImage("images/player3.jpg");
     img.resize(size, size);
     image(img, x-size/2, y-size/2, size, size);
   }
@@ -381,15 +387,15 @@ void player_img(int x, int y, int size) {
 void hunter_img(int x, int y, int size) {
   PImage img;
   if (imgscene==1) {
-    img = loadImage("hunter1.jpg");
+    img = loadImage("images/hunter1.jpg");
     img.resize(size, size);
     image(img, x-size/2, y-size/2, size, size);
   } else if (imgscene==2) {
-    img = loadImage("hunter2.jpg");
+    img = loadImage("images/hunter2.jpg");
     img.resize(size, size);
     image(img, x-size/2, y-size/2, size, size);
   } else if (imgscene==3) {
-    img = loadImage("hunter3.jpg");
+    img = loadImage("images/hunter3.jpg");
     img.resize(size, size);
     image(img, x-size/2, y-size/2, size, size);
   }
@@ -397,23 +403,23 @@ void hunter_img(int x, int y, int size) {
 
 void treasure_img(int x, int y, int size) {
   PImage img;
-  img = loadImage("treasure.jpg");
+  img = loadImage("images/treasure.jpg");
   img.resize(size, size);
   image(img, x, y, size, size);
 }
 
 void background_img(int x, int y) {
   PImage img;
-  if(imgscene == 1) {
-    img = loadImage("background1.jpg");
+  if (imgscene == 1) {
+    img = loadImage("images/background1.jpg");
     img.resize(width, height);
     image(img, x, y, width, height);
-  } else if(imgscene == 2) {
-    img = loadImage("background2.jpg");
+  } else if (imgscene == 2) {
+    img = loadImage("images/background2.jpg");
     img.resize(width, height);
     image(img, x, y, width, height);
-  } else if(imgscene == 3) {
-    img = loadImage("background3.jpg");
+  } else if (imgscene == 3) {
+    img = loadImage("images/background3.jpeg");
     img.resize(width, height);
     image(img, x, y, width, height);
   }
@@ -422,15 +428,15 @@ void background_img(int x, int y) {
 void goal_img(int x, int y, int size) {
   PImage img;
   if (imgscene==1) {
-    img = loadImage("goal1.jpg");
+    img = loadImage("images/goal1.jpeg");
     img.resize(size, size);
     image(img, x, y, size, size);
   } else if (imgscene==2) {
-    img = loadImage("goal2.jpg");
+    img = loadImage("images/goal2.jpg");
     img.resize(size, size);
     image(img, x, y, size, size);
   } else if (imgscene==3) {
-    img = loadImage("goal3.jpg");
+    img = loadImage("images/goal3.jpg");
     img.resize(size, size);
     image(img, x, y, size, size);
   }
